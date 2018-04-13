@@ -277,6 +277,26 @@ describe('Schema Builder', () => {
     expect(output).to.equal(body);
   });
 
+  it('Simple type with multiple interfaces', () => {
+    const body = dedent`
+      type Query implements WorldInterface, Character {
+        str: String
+        name: String
+      }
+
+      interface WorldInterface {
+        str: String
+      }
+
+      interface Character {
+        name: String
+      }
+    `;
+    
+    const output = cycleOutput(body, 'Hello');
+    expect(output).to.equal(body);
+  });
+
   it('Simple output enum', () => {
     const body = dedent`
       enum Hello {
